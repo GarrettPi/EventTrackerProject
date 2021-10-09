@@ -8,6 +8,10 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
 		<class>com.skilldistillery.printtracker.entities.Print</class>
+		<class>com.skilldistillery.printtracker.entities.Printer</class>
+		<class>com.skilldistillery.printtracker.entities.PrinterType</class>
+		<class>com.skilldistillery.printtracker.entities.Material</class>
+		<class>com.skilldistillery.printtracker.entities.Source</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.url"

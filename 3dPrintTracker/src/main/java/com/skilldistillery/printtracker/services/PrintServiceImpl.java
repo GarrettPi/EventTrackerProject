@@ -1,6 +1,7 @@
 package com.skilldistillery.printtracker.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -20,6 +21,29 @@ public class PrintServiceImpl implements PrintService {
 	@Override
 	public List<Print> getAllPrints() {
 		return printRepo.findAll();
+	}
+
+	@Override
+	public Print findById(int id) {
+		try {
+			Optional<Print> opt = printRepo.findById(id);
+			if(opt.get() != null) {
+				Print print = opt.get();
+				return print;
+			}
+			return null;
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			return null;
+		}
+	}
+
+	@Override
+	public void deleteById(int id) {
+		Optional<Print> opt = printRepo.findById(id);
+		if(opt.get() != null) {
+			printRepo.deleteById(id);
+		}
 	}
 
 }

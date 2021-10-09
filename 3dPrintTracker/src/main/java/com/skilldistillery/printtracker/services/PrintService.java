@@ -7,4 +7,6 @@ import com.skilldistillery.printtracker.entities.Print;
 public interface PrintService {
 
 	List<Print> getAllPrints();
+	Print findById(int id);
+	void deleteById(int id);
 }

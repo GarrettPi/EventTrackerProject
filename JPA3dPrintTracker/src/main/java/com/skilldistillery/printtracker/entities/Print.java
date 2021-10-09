@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Print {
@@ -24,6 +26,18 @@ public class Print {
 
 	@Column(name = "photo_url")
 	private String photoUrl;
+	
+	@ManyToOne
+	@JoinColumn(name="printer_id")
+	private Printer printer;
+	
+	@ManyToOne
+	@JoinColumn(name="source_id")
+	private Source source;
+	
+	@ManyToOne
+	@JoinColumn(name="material_id")
+	private Material material;
 
 	// Methods
 
@@ -65,6 +79,30 @@ public class Print {
 
 	public void setPhotoUrl(String photoUrl) {
 		this.photoUrl = photoUrl;
+	}
+
+	public Printer getPrinter() {
+		return printer;
+	}
+
+	public void setPrinter(Printer printer) {
+		this.printer = printer;
+	}
+
+	public Source getSource() {
+		return source;
+	}
+
+	public void setSource(Source source) {
+		this.source = source;
+	}
+
+	public Material getMaterial() {
+		return material;
+	}
+
+	public void setMaterial(Material material) {
+		this.material = material;
 	}
 
 	public Print() {
