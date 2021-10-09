@@ -8,4 +8,6 @@ public interface PrinterService {
 
 	List<Printer> getAllPrinters();
 	Printer	findById(int id);
+	Printer createrPrinter(Printer printer);
+	void deletePrinter(int id);
 }

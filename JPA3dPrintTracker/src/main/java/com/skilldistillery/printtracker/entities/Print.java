@@ -31,7 +31,6 @@ public class Print {
 	
 	@ManyToOne
 	@JoinColumn(name="printer_id")
-	@JsonBackReference(value="printsToPrinter")
 	private Printer printer;
 	
 	@ManyToOne

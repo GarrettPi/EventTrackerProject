@@ -11,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Printer {
@@ -23,7 +23,7 @@ public class Printer {
 	private String name;
 	
 	@OneToMany(mappedBy="printer")
-	@JsonManagedReference(value="printsToPrinter")
+	@JsonIgnore
 	private List<Print> prints;
 	
 	@ManyToOne
