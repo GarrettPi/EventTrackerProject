@@ -9,4 +9,5 @@ public interface PrintService {
 	List<Print> getAllPrints();
 	Print findById(int id);
 	void deleteById(int id);
+	Print editPrint(int id, Print newPrint);
 }

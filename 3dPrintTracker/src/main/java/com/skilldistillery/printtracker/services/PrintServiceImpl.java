@@ -46,4 +46,22 @@ public class PrintServiceImpl implements PrintService {
 		}
 	}
 
+	@Override
+	public Print editPrint(int id, Print newPrint) {
+		Print print = printRepo.getById(id);
+		if(print == null) {
+		return null;
+		} else {
+			print.setDuration(newPrint.getDuration());
+			print.setMaterial(newPrint.getMaterial());
+			print.setMaterialConsumed(newPrint.getMaterialConsumed());
+			print.setName(newPrint.getName());
+			print.setPhotoUrl(newPrint.getPhotoUrl());
+			print.setPrinter(newPrint.getPrinter());
+			print.setSource(newPrint.getSource());
+			printRepo.saveAndFlush(print);
+			return print;
+		}
+	}
+
 }

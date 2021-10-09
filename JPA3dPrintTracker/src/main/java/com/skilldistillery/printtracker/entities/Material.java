@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -26,11 +28,13 @@ public class Material {
 	
 	private String color;
 	
-	private String material;
-	
 	@OneToMany(mappedBy="material")
 	@JsonIgnore
 	private List<Print> prints;
+	
+	@ManyToOne
+	@JoinColumn(name="material_type_id")
+	private MaterialType materialType;
 	
 	//Methods
 
@@ -66,14 +70,6 @@ public class Material {
 		this.color = color;
 	}
 
-	public String getMaterial() {
-		return material;
-	}
-
-	public void setMaterial(String material) {
-		this.material = material;
-	}
-
 	public List<Print> getPrints() {
 		return prints;
 	}
@@ -82,19 +78,27 @@ public class Material {
 		this.prints = prints;
 	}
 
+	public MaterialType getMaterialType() {
+		return materialType;
+	}
+
+	public void setMaterialType(MaterialType materialType) {
+		this.materialType = materialType;
+	}
+
 	public Material() {
 		super();
 	}
 
 	@Override
 	public String toString() {
-		return "Material [id=" + id + ", name=" + name + ", cost=" + cost + ", color=" + color + ", material="
-				+ material + "]";
+		return "Material [id=" + id + ", name=" + name + ", cost=" + cost + ", color=" + color + ", prints=" + prints
+				+ ", materialType=" + materialType + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(color, cost, id, material, name);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -106,10 +110,10 @@ public class Material {
 		if (getClass() != obj.getClass())
 			return false;
 		Material other = (Material) obj;
-		return Objects.equals(color, other.color)
-				&& Double.doubleToLongBits(cost) == Double.doubleToLongBits(other.cost) && id == other.id
-				&& Objects.equals(material, other.material) && Objects.equals(name, other.name);
+		return id == other.id;
 	}
+
+	
 	
 	
 

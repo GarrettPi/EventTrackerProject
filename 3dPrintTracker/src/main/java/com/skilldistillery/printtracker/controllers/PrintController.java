@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,6 +45,16 @@ public class PrintController {
 			printSvc.deleteById(id);
 		} else {
 			res.setStatus(404);
+		}
+	}
+	
+	@PutMapping("prints/{id}")
+	private Print editPrint(@PathVariable Integer id, @RequestBody Print print, HttpServletResponse res) {
+		Print newPrint =  printSvc.editPrint(id, print);
+		if(print!=null) return newPrint;
+		else {
+			res.setStatus(404);
+			return null;
 		}
 	}
 }
