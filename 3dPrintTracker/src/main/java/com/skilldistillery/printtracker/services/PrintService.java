@@ -10,4 +10,5 @@ public interface PrintService {
 	Print findById(int id);
 	void deleteById(int id);
 	Print editPrint(int id, Print newPrint);
+	Print createPrint(Print print);
 }

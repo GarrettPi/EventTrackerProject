@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Print {
 
@@ -29,6 +31,7 @@ public class Print {
 	
 	@ManyToOne
 	@JoinColumn(name="printer_id")
+	@JsonBackReference(value="printsToPrinter")
 	private Printer printer;
 	
 	@ManyToOne

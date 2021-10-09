@@ -14,7 +14,7 @@ import com.skilldistillery.printtracker.repositories.PrintRepository;
 @Service
 @Transactional
 public class PrintServiceImpl implements PrintService {
-	
+
 	@Autowired
 	private PrintRepository printRepo;
 
@@ -27,7 +27,7 @@ public class PrintServiceImpl implements PrintService {
 	public Print findById(int id) {
 		try {
 			Optional<Print> opt = printRepo.findById(id);
-			if(opt.get() != null) {
+			if (opt.get() != null) {
 				Print print = opt.get();
 				return print;
 			}
@@ -41,7 +41,7 @@ public class PrintServiceImpl implements PrintService {
 	@Override
 	public void deleteById(int id) {
 		Optional<Print> opt = printRepo.findById(id);
-		if(opt.get() != null) {
+		if (opt.get() != null) {
 			printRepo.deleteById(id);
 		}
 	}
@@ -49,8 +49,8 @@ public class PrintServiceImpl implements PrintService {
 	@Override
 	public Print editPrint(int id, Print newPrint) {
 		Print print = printRepo.getById(id);
-		if(print == null) {
-		return null;
+		if (print == null) {
+			return null;
 		} else {
 			print.setDuration(newPrint.getDuration());
 			print.setMaterial(newPrint.getMaterial());
@@ -59,9 +59,15 @@ public class PrintServiceImpl implements PrintService {
 			print.setPhotoUrl(newPrint.getPhotoUrl());
 			print.setPrinter(newPrint.getPrinter());
 			print.setSource(newPrint.getSource());
-			printRepo.saveAndFlush(print);
+			print = printRepo.saveAndFlush(print);
 			return print;
 		}
+	}
+
+	@Override
+	public Print createPrint(Print print) {
+		print = printRepo.saveAndFlush(print);
+		return print;
 	}
 
 }

@@ -7,4 +7,5 @@ import com.skilldistillery.printtracker.entities.Printer;
 public interface PrinterService {
 
 	List<Printer> getAllPrinters();
+	Printer	findById(int id);
 }
