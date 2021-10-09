@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -23,6 +25,10 @@ public class Printer {
 	@OneToMany(mappedBy="printer")
 	@JsonIgnore
 	private List<Print> prints;
+	
+	@ManyToOne
+	@JoinColumn(name="printer_type_id")
+	private PrinterType printerType;
 
 	//Methods
 	
@@ -48,6 +54,14 @@ public class Printer {
 
 	public void setPrints(List<Print> prints) {
 		this.prints = prints;
+	}
+
+	public PrinterType getPrinterType() {
+		return printerType;
+	}
+
+	public void setPrinterType(PrinterType printerType) {
+		this.printerType = printerType;
 	}
 
 	public Printer() {

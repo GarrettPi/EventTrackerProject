@@ -1,12 +1,16 @@
 package com.skilldistillery.printtracker.entities;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="printer_type")
@@ -17,6 +21,12 @@ public class PrinterType {
 	private int id;
 	
 	private String name;
+	
+	@OneToMany(mappedBy="printerType")
+	@JsonIgnore
+	private List<Printer> printers;
+	
+	//Methods
 
 	public int getId() {
 		return id;
@@ -32,6 +42,14 @@ public class PrinterType {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List<Printer> getPrinters() {
+		return printers;
+	}
+
+	public void setPrinters(List<Printer> printers) {
+		this.printers = printers;
 	}
 
 	public PrinterType() {
