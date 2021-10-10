@@ -66,8 +66,7 @@ public class PrintServiceImpl implements PrintService {
 
 	@Override
 	public Print createPrint(Print print) {
-		print = printRepo.saveAndFlush(print);
-		return print;
+		return printRepo.saveAndFlush(print);
 	}
 
 }
