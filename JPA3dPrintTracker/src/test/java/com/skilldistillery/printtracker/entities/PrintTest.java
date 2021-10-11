@@ -11,6 +11,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PrintTest {
@@ -42,11 +43,23 @@ class PrintTest {
 	}
 
 	@Test
+	@DisplayName("test print entity mappings")
 	void test_print_entity_mappings() {
 		assertNotNull(print);
 		assertEquals("Tricorder", print.getName());
 		assertEquals(240, print.getDuration());
 		assertEquals(0.15, print.getMaterialConsumed());
+	}
+	
+	@Test
+	@DisplayName("test relationship mappings on print")
+	void test_relation_mappings() {
+		assertNotNull(print);
+		assertEquals("Tricorder", print.getName());
+		assertEquals("CR10s Pro V2", print.getPrinter().getName());
+		assertEquals("Me", print.getSource().getName());
+		assertEquals("Inland 1.75mm", print.getMaterial().getName());
+		
 	}
 
 }

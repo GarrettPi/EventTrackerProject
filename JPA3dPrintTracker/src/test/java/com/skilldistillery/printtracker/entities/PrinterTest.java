@@ -11,6 +11,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PrinterTest {
@@ -42,9 +43,17 @@ class PrinterTest {
 	}
 
 	@Test
-	void test_print_entity_mappings() {
+	@DisplayName("test printer entity mappings")
+	void test_printer_entity_mappings() {
 		assertNotNull(printer);
 		assertEquals("CR10s Pro V2", printer.getName());
+	}
+	
+	@Test
+	@DisplayName("test relational mappings on Printer")
+	void test_relational_mappings() {
+		assertNotNull(printer);
+		assertEquals("FDM", printer.getPrinterType().getName());
 	}
 
 }

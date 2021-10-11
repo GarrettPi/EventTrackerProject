@@ -11,6 +11,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class MaterialTest {
@@ -42,9 +43,17 @@ class MaterialTest {
 	}
 
 	@Test
+	@DisplayName("test material entity mappings")
 	void test_print_entity_mappings() {
 		assertNotNull(material);
 		assertEquals("Inland 1.75mm", material.getName());
+	}
+	
+	@Test
+	@DisplayName("test materialType mappings on material")
+	void test_relational_mappings() {
+		assertNotNull(material);
+		assertEquals("PLA", material.getMaterialType().getName());
 	}
 
 }
