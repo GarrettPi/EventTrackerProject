@@ -1,5 +1,5 @@
 # EventTrackerProject
-## 3d Print Resources
+3d Printer Resources
 
 ### Description
 
