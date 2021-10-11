@@ -46,8 +46,16 @@ public class PrinterController {
 	}
 
 	@DeleteMapping("printers/{id}")
-	public void deletePrinter(@PathVariable Integer id) {
-		printerSvc.deletePrinter(id);
+	public boolean deletePrinter(@PathVariable Integer id, HttpServletResponse res) {
+		Printer printer = printerSvc.findById(id);
+		if(printer!= null) {
+			printerSvc.deletePrinter(id);
+			return true;
+		}
+		else {
+			res.setStatus(404);
+			return false;
+		}
 	}
 
 	@PutMapping("printers/{id}")

@@ -40,12 +40,14 @@ public class PrintController {
 	}
 
 	@DeleteMapping("prints/{id}")
-	private void deletePrint(@PathVariable Integer id, HttpServletResponse res) {
+	private boolean deletePrint(@PathVariable Integer id, HttpServletResponse res) {
 		Print print = printSvc.findById(id);
 		if (print != null) {
 			printSvc.deleteById(id);
+			return true;
 		} else {
 			res.setStatus(404);
+			return false;
 		}
 	}
 
