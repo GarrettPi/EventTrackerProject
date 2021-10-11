@@ -8,11 +8,17 @@ This is the JPA/Sprint Boot/RESTful backend for a web application designed to ma
 
 | Return Type    | Route                       | Functionality                     |
 |----------------|-----------------------------|-----------------------------------|
-| `List<Print>`  |`GET /api/prints`               | Gets all fighters                 |
-| `Fighter`      |`GET /api/prints/{id}`   | Gets one fighter by id            |
-| `Fighter`      |`POST /api/prints`              | Creates a new fighter             |
-| `Fighter`      |`PUT /api/prints/{id}`   | Replaces an existing fighter by id|
-| `Boolean`      |`DELETE /api/prints/{id}`| Deletes an existing fighter by id |
+| `List<Print>`  |`GET /api/prints`               | Gets all 3d Prints                 |
+| `Print`      |`GET /api/prints/{id}`   | Gets one Print by id            |
+| `Print`      |`POST /api/prints`              | Creates a new Print             |
+| `Print`      |`PUT /api/prints/{id}`   | Replaces an existing Print by id|
+| `Boolean`      |`DELETE /api/prints/{id}`| Deletes an existing Print by id |
+| `List<Printer>`  |`GET /api/printers`               | Gets all 3d Printers                 |
+| `Printer`      |`GET /api/printers/{id}`   | Gets one Printer by id            |
+| `Printer`      |`POST /api/printerss`              | Creates a new Printer             |
+| `Printer`      |`PUT /api/printers/{id}`   | Replaces an existing Printer by id|
+| `Boolean`      |`DELETE /api/printers/{id}`| Deletes an existing Printer by id |
+
 
 ### Technologies
 - Java Persistence API
