@@ -28,5 +28,5 @@ This is the JPA/Sprint Boot/RESTful backend for a web application designed to ma
 - postman
 
 ### Future Updates
-
-### Lessons Learned
+* An Angular frontend that will allow the user to interact with the database and API in a GUI
+* Full CRUD capabilities for the material table
