@@ -25,7 +25,7 @@ The Database has been prepopulated with rows in each table, allowing you to test
 
 ### MySQL Schema
 
-![alt text](https://imgur.com/a/9ZyJnPU)
+![alt text](https://i.imgur.com/GwUwP5G.png)
 
 ### Technologies
 - Java Persistence API
