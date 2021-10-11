@@ -52,7 +52,7 @@ public class PrintController {
 	@PutMapping("prints/{id}")
 	private Print editPrint(@PathVariable Integer id, @RequestBody Print print, HttpServletResponse res) {
 		Print newPrint = printSvc.editPrint(id, print);
-		if (print != null)
+		if (newPrint != null)
 			return newPrint;
 		else {
 			res.setStatus(404);

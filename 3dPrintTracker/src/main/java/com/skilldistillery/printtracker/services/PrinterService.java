@@ -10,4 +10,5 @@ public interface PrinterService {
 	Printer	findById(int id);
 	Printer createrPrinter(Printer printer);
 	void deletePrinter(int id);
+	Printer editPrinter(int id, Printer newPrinter);
 }

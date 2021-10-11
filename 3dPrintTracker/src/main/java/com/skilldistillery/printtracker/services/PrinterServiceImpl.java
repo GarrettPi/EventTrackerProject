@@ -59,4 +59,18 @@ public class PrinterServiceImpl implements PrinterService {
 
 	}
 
+	@Override
+	public Printer editPrinter(int id, Printer newPrinter) {
+		Printer printer = printerRepo.getById(id);
+		if(printer == null) {
+		return null;
+		}
+		else {
+			printer.setName(newPrinter.getName());
+			printer.setPrinterType(newPrinter.getPrinterType());
+			printer = printerRepo.saveAndFlush(printer);
+			return printer;
+		}
+	}
+
 }
