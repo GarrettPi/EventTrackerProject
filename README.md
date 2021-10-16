@@ -5,8 +5,8 @@
 This is the JPA/Sprint Boot/RESTful backend for a web application designed to manage one's 3d printers, materials, and prints.  It allows the user to create a manage a relational database of 3d Printers and all associated information. 
 
 ### How to Use
-This API project can be accessed by going to the following address and inputing the routes listed below:                                               
-http://13.58.89.163/webapp/3dPrint
+This API project can be accessed by accessing the following URL and appending the routes listed below:                                               
+http://13.58.89.163:8080/3dPrintTracker/
 
 The Database has been prepopulated with rows in each table, allowing you to test all features.
 
