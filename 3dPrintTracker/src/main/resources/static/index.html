@@ -5,10 +5,21 @@
 <title>3d Print Tracker</title>
 </head>
 <body>
-	<h1>3d Print Tracker</h1>
-
-
-
+	<h1>3d Print Tracker</h1><br>
+	<h3>Details:</h3>
+	<div id="singleResult">
+	<p id="noneSelected">No Print Selected</p></div><br>
+	<div id="printsResults"></div>
+	<div id="newPrint">
+		<h2>Add A New Print</h2>
+		<form name="newPrintForm" action="index.html" method="post">
+			<input type="text" name="name" placeholder="Name">
+			<input type="text" name="photoUrl" placeholder="Photo URL">
+			<input type="text" name="materialConsumed" placeholder="Material Consumed">
+			<input type="text" name="duration" placeholder="Print Duration">
+			<input type="submit" name="submit" value="Add Print">
+		</form>
+	</div>
 
 	<script src="js/script.js"></script>
 </body>
