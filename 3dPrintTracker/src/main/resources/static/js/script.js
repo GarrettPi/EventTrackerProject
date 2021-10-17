@@ -7,20 +7,45 @@ var init = function(e){
 			var data = JSON.parse(xhr.responseText);
 			console.log(data);
 			displayAllPrints(data);
+
+			var xhr2 = new XMLHttpRequest();
+			xhr2.open('GET', 'api/printers');
+			xhr2.onreadystatechange = function(){
+				if(xhr2.status < 400 && xhr2.readyState === 4){
+					printersList = JSON.parse(xhr2.responseText);
+					loadPrintersList(printersList);
+				}
+				else if (xhr2.readyState === 4 && xhr2.status >= 400){
+					console.log('***********************Some Error****************');
+				}
+			}
+			xhr2.send(null);
 		}
 		else if (xhr.readyState === 4 && xhr.status >= 400) {
 			console.log('******************some Error*********************');
 		}
 	};
 	xhr.send(null);
+
 };
 
 window.addEventListener('load', init);
-
+var printersList;
+var printerSelect = document.getElementById('printerSelect');
 var listItems = document.getElementsByClassName('lr');
 var singleResult = document.getElementById('singleResult');
 var newPrintForm = document.newPrintForm;
-console.log(newPrintForm);
+
+function loadPrintersList(printers){
+	for(let printer of printers){
+		let option = document.createElement('option');
+		option.value = printer.id;
+		option.textContent = printer.name;
+		printerSelect.appendChild(option);
+		console.log(printer);
+	}
+}
+
 
 var addPrint = function(e){
 	e.preventDefault();
@@ -47,10 +72,7 @@ var addPrint = function(e){
 		"materialConsumed": newPrintForm.materialConsumed.value,
 		"photoUrl": newPrintForm.photoUrl.value,
 		"printer": {
-				"id": 1,
-				"printerType": {
-						"id": 1,
-				}
+				"id": newPrintForm.printer.value
 		},
 		"source": {
 				"id": 1
@@ -84,31 +106,51 @@ var itemClick = function(e){
 	input.setAttribute('name', 'id');
 	input.setAttribute('readonly', true);
 	input.setAttribute('value', this.firstElementChild.textContent);
-	form.appendChild(input);
+	let p = document.createElement('p');
+	p.textContent = 'Id: ';
+	p.appendChild(input);
+	form.appendChild(p);
+	// form.appendChild(document.createElement('br'));
 
 	input = document.createElement('input');
 	input.setAttribute('type', 'text');
 	input.setAttribute('name', 'name');
 	input.setAttribute('value', this.firstElementChild.nextElementSibling.nextElementSibling.textContent);
-	form.appendChild(input);
+	p = document.createElement('p');
+	p.textContent = 'Name: ';
+	p.appendChild(input);
+	form.appendChild(p);
+	// form.appendChild(document.createElement('br'));
 
 	input = document.createElement('input');
 	input.setAttribute('type', 'text');
 	input.setAttribute('name', 'photoUrl');
 	input.setAttribute('value', this.firstElementChild.nextElementSibling.firstElementChild.src);
-	form.appendChild(input);
+	p = document.createElement('p');
+	p.textContent = 'Photo URL: ';
+	p.appendChild(input);
+	form.appendChild(p);
+	// form.appendChild(document.createElement('br'));
 
 	input = document.createElement('input');
 	input.setAttribute('type', 'text');
 	input.setAttribute('name', 'materialConsumed');
 	input.setAttribute('value', this.firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.textContent);
-	form.appendChild(input);
+	p = document.createElement('p');
+	p.textContent = 'Material Consumed: ';
+	p.appendChild(input);
+	form.appendChild(p);
+	// form.appendChild(document.createElement('br'));
 
 	input = document.createElement('input');
 	input.setAttribute('type', 'text');
 	input.setAttribute('name', 'duration');
 	input.setAttribute('value', this.firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.textContent);
-	form.appendChild(input);
+	p = document.createElement('p');
+	p.textContent = 'Print Duration: ';
+	p.appendChild(input);
+	form.appendChild(p);
+	// form.appendChild(document.createElement('br'));
 
 	input = document.createElement('input');
 	input.setAttribute('type', 'submit');
@@ -170,6 +212,7 @@ var itemClick = function(e){
 
 	input.addEventListener('click', function(e){
 		e.preventDefault();
+		if(confirm('Are you sure you want to delete '+form.name.value +'?')){
 		let form = document.getElementById('editPrintForm');
 		var xhr = new XMLHttpRequest();
 		xhr.open('DELETE', 'api/prints/'+form.id.value);
@@ -180,6 +223,7 @@ var itemClick = function(e){
 			}
 		};
 		xhr.send(null);
+	}
 	});
 
 	form.appendChild(input);
@@ -213,6 +257,12 @@ function displayAllPrints(data){
 	h = document.createElement('th');
 	h.textContent = 'Cost of Material';
 	row.appendChild(h);
+	h = document.createElement('th');
+	h.textContent = 'Printer';
+	row.appendChild(h);
+	h = document.createElement('th');
+	h.textContent = 'Material Name';
+	row.appendChild(h);
 	row.className = 'lr';
 	table.appendChild(row);
 	for(let item of data){
@@ -230,13 +280,19 @@ function displayAllPrints(data){
 		d.textContent = item.name;
 		row.appendChild(d);
 		d = document.createElement('td');
-		d.textContent = item.materialConsumed;
+		d.textContent = item.materialConsumed+' kg';
 		row.appendChild(d);
 		d = document.createElement('td');
-		d.textContent = item.duration;
+		d.textContent = item.duration > 60 ? Math.round((item.duration/60) * 100) /100 +' hours' : item.duration +' minutes';
 		row.appendChild(d);
 		d = document.createElement('td');
 		d.textContent = '$' + Math.round((item.materialConsumed * item.material.cost) * 100) /100;
+		row.appendChild(d);
+		d = document.createElement('td');
+		d.textContent = item.printer.name;
+		row.appendChild(d);
+		d = document.createElement('td');
+		d.textContent = item.material.name;
 		row.appendChild(d);
 		row.addEventListener('click', itemClick);
 		row.className = 'lr';
