@@ -65,6 +65,7 @@ var addPrint = function(e){
 	var newPrintJson = JSON.stringify(newPrint);
 	console.log(newPrint);
 	xhr.send(newPrintJson);
+
 };
 
 var itemClick = function(e){
