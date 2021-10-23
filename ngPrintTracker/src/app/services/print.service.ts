@@ -22,4 +22,14 @@ export class PrintService {
       })
     );
   }
+
+  update(print: Print){
+    console.log('updating print');
+    return this.http.put<Print>(this.url+"/"+print.id, print).pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError("PrintService.update(): error updating print");
+      })
+    );
+  }
 }

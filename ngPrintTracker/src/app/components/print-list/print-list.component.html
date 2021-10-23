@@ -1,3 +1,112 @@
-<ul>
-  <li *ngFor="let print of prints">{{print.printer.name}}</li>
-</ul>
+<button class="btn btn-primary" (click)="newForm = true">New Print</button>
+<div id="newPrint" *ngIf="newForm">
+  <form name="newPrint">
+    <label for="name">Print Name: </label>
+    <input type="text" name="name" placeholder="Name" [(ngModel)]="newPrint.name"><br>
+    <label for="duration"> Printing Time: </label>
+    <input type="text" name="duration" value="{{newPrint.duration}}"><br>
+    <label for="materialConsumed"> Material Consumed: </label>
+    <input type="text" name="materialConsumed" value="{{newPrint.materialConsumed}}"><br>
+    <label for="printer">Printer: </label>
+    <select name="printer" id="printer">
+      <option *ngFor="let printer of printers" value="{{printer.id}}">{{printer.name}}</option>
+    </select><br>
+    <input class="btn btn-primary" type="submit" value="Add Print" (click)="edit(newPrint)">
+    <button class="btn btn-danger" (click)="resetNewPrint()">Cancel</button>
+  </form>
+</div>
+<div id="indexTable">
+  <table *ngIf="!selected">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Photo</th>
+        <th>Name</th>
+        <th>Duration</th>
+        <th>Material Consumsed</th>
+        <th>Printer</th>
+        <th>Source</th>
+        <th>Material</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let print of prints" (click)="selectPrint(print)">
+        <td>{{print.id}}</td>
+        <td><img src="{{print.photoUrl}}" width="100px"></td>
+        <td>{{print.name}}</td>
+        <td>{{print.duration}}</td>
+        <td>{{print.materialConsumed}}</td>
+        <td>{{print.printer.name}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="displayPrint" class="container" *ngIf="selected">
+  <div class="row">
+    <h1>{{selected.name}}</h1>
+    <div class="col-sm">
+      <img src="{{selected.photoUrl}}" width="50%">
+      <p>Print Cost: </p>
+    </div>
+    <div class="col-sm">
+      <table style="text-justify: left;">
+        <tr>
+          <th>Id</th>
+          <td>{{selected.id}}</td>
+        </tr>
+        <tr>
+          <th>Printing Time</th>
+          <td>{{selected.duration}}</td>
+        </tr>
+        <tr>
+          <th>Material Consumed</th>
+          <td>{{selected.materialConsumed}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col">
+      <h3>Printer</h3>
+      <ul>
+        <li>Id: {{selected.printer.id}}</li>
+        <li>Name: {{selected.printer.name}}</li>
+      </ul>
+    </div>
+    <div class="col">
+      <ul>
+        <li>Mat id</li>
+        <li>mat name</li>
+        <li>mat type</li>
+        <li>mat color</li>
+        <li>mat price</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div id="displayButtons" class="container" style="justify-items: center;">
+  <button class="btn btn-warning" *ngIf="selected" (click)="setEditPrint()">Edit Print</button>
+  <button class="btn btn-primary" (click)="selected = null;" *ngIf="selected">Return</button>
+</div><br>
+
+<div class="container" id="editForm" *ngIf="editedPrint">
+  <form name="edit">
+    <label for="name">Print Name: </label>
+    <input type="text" name="name" value="{{editedPrint.name}}" [(ngModel)]="editedPrint.name"><br>
+    <label for="duration"> Printing Time: </label>
+    <input type="text" name="duration" value="{{editedPrint.duration}}"><br>
+    <label for="materialConsumed"> Material Consumed: </label>
+    <input type="text" name="materialConsumed" value="{{editedPrint.materialConsumed}}"><br>
+    <label for="printer">Printer: </label>
+    <select name="printer" id="printer">
+      <option *ngFor="let printer of printers" value="{{printer.id}}">{{printer.name}}</option>
+    </select><br>
+    <input class="btn btn-primary" type="submit" value="Submit Changes" (click)="edit(editedPrint)">
+    <button class="btn btn-danger" (click)="editedPrint = null">Cancel</button>
+  </form>
+</div>
+
+
