@@ -1,31 +1,41 @@
-<button class="btn btn-primary" (click)="newForm = true">New Print</button>
+<button class="btn btn-primary" (click)="newForm = true" *ngIf="!selected && !newForm">New Print</button>
 <div id="newPrint" *ngIf="newForm">
   <form name="newPrint">
     <label for="name">Print Name: </label>
     <input type="text" name="name" placeholder="Name" [(ngModel)]="newPrint.name"><br>
     <label for="duration"> Printing Time: </label>
-    <input type="text" name="duration" value="{{newPrint.duration}}"><br>
+    <input type="text" name="duration" value="{{newPrint.duration}}" [(ngModel)]="newPrint.duration"><br>
     <label for="materialConsumed"> Material Consumed: </label>
-    <input type="text" name="materialConsumed" value="{{newPrint.materialConsumed}}"><br>
+    <input type="text" name="materialConsumed" value="{{newPrint.materialConsumed}}" [(ngModel)]="newPrint.materialConsumed"><br>
+    <label for="photoUrl"> Photo URL: </label>
+    <input type="text" name="photoUrl" value="{{newPrint.photoUrl}}" [(ngModel)]="newPrint.photoUrl"><br>
     <label for="printer">Printer: </label>
-    <select name="printer" id="printer">
+    <select name="printer" id="printer" [(ngModel)]="newPrint.printer.id">
       <option *ngFor="let printer of printers" value="{{printer.id}}">{{printer.name}}</option>
     </select><br>
-    <input class="btn btn-primary" type="submit" value="Add Print" (click)="edit(newPrint)">
-    <button class="btn btn-danger" (click)="resetNewPrint()">Cancel</button>
+    <label for="material">Material: </label>
+    <select name="material" id="material" [(ngModel)]="newPrint.material.id">
+      <option *ngFor="let material of materials" value="{{material.id}}">{{material.name}}</option>
+    </select><br>
+    <label for="material">Source: </label>
+    <select name="source" id="source" [(ngModel)]="newPrint.source.id">
+      <option *ngFor="let source of sources" value="{{source.id}}">{{source.name}}</option>
+    </select><br>
+    <input class="btn btn-primary" type="submit" value="Add Print" (click)="createPrint(newPrint)">
+    <button class="btn btn-danger" (click)="resetNewPrint(); newForm = false">Cancel</button>
   </form>
 </div>
 <div id="indexTable">
-  <table *ngIf="!selected">
+  <table *ngIf="!selected && !newForm">
     <thead>
       <tr>
         <th>Id</th>
         <th>Photo</th>
         <th>Name</th>
         <th>Duration</th>
-        <th>Material Consumsed</th>
-        <th>Printer</th>
-        <th>Source</th>
+        <th style=>Material Consumsed</th>
+        <th style="text-align: center;">Printer</th>
+        <!-- <th>Source</th> -->
         <th>Material</th>
       </tr>
     </thead>
@@ -34,9 +44,10 @@
         <td>{{print.id}}</td>
         <td><img src="{{print.photoUrl}}" width="100px"></td>
         <td>{{print.name}}</td>
-        <td>{{print.duration}}</td>
-        <td>{{print.materialConsumed}}</td>
+        <td style="text-align: center;">{{print.duration}}</td>
+        <td style="text-align: center;">{{print.materialConsumed}}</td>
         <td>{{print.printer.name}}</td>
+        <td>{{print.material.name}}</td>
       </tr>
     </tbody>
   </table>
@@ -47,10 +58,10 @@
     <h1>{{selected.name}}</h1>
     <div class="col-sm">
       <img src="{{selected.photoUrl}}" width="50%">
-      <p>Print Cost: </p>
+      <p>Print Cost: ${{calcCost(selected.materialConsumed, selected.material.cost)}}</p>
     </div>
     <div class="col-sm">
-      <table style="text-justify: left;">
+      <table style="text-align: left;">
         <tr>
           <th>Id</th>
           <td>{{selected.id}}</td>
@@ -76,12 +87,13 @@
       </ul>
     </div>
     <div class="col">
+      <h3>Material</h3>
       <ul>
-        <li>Mat id</li>
-        <li>mat name</li>
-        <li>mat type</li>
-        <li>mat color</li>
-        <li>mat price</li>
+        <li>Id: {{selected.material.id}}</li>
+        <li>Name: {{selected.material.name}}</li>
+        <li>Type: {{selected.material.materialType.name}}</li>
+        <li>Color: {{selected.material.color}}</li>
+        <li>Cost: {{selected.material.cost}}</li>
       </ul>
     </div>
   </div>
@@ -89,6 +101,7 @@
 
 <div id="displayButtons" class="container" style="justify-items: center;">
   <button class="btn btn-warning" *ngIf="selected" (click)="setEditPrint()">Edit Print</button>
+  <button class="btn btn-danger" *ngIf="selected" (click)="delete(selected.id)">Delete Print</button>
   <button class="btn btn-primary" (click)="selected = null;" *ngIf="selected">Return</button>
 </div><br>
 
@@ -97,12 +110,22 @@
     <label for="name">Print Name: </label>
     <input type="text" name="name" value="{{editedPrint.name}}" [(ngModel)]="editedPrint.name"><br>
     <label for="duration"> Printing Time: </label>
-    <input type="text" name="duration" value="{{editedPrint.duration}}"><br>
+    <input type="text" name="duration" value="{{editedPrint.duration}}" [(ngModel)]="editedPrint.duration"><br>
     <label for="materialConsumed"> Material Consumed: </label>
-    <input type="text" name="materialConsumed" value="{{editedPrint.materialConsumed}}"><br>
+    <input type="text" name="materialConsumed" value="{{editedPrint.materialConsumed}}" [(ngModel)]="editedPrint.materialConsumed"><br>
+    <label for="photoUrl"> Photo URL: </label>
+    <input type="text" name="photoUrl" value="{{editedPrint.photoUrl}}" [(ngModel)]="editedPrint.photoUrl"><br>
     <label for="printer">Printer: </label>
-    <select name="printer" id="printer">
+    <select name="printer" id="printer" [(ngModel)]="editedPrint.printer.id">
       <option *ngFor="let printer of printers" value="{{printer.id}}">{{printer.name}}</option>
+    </select><br>
+    <label for="material">Material: </label>
+    <select name="material" id="material" [(ngModel)]="editedPrint.material.id">
+      <option *ngFor="let material of materials" value="{{material.id}}">{{material.name}}</option>
+    </select><br>
+    <label for="material">Source: </label>
+    <select name="source" id="source" [(ngModel)]="editedPrint.source.id">
+      <option *ngFor="let source of sources" value="{{source.id}}">{{source.name}}</option>
     </select><br>
     <input class="btn btn-primary" type="submit" value="Submit Changes" (click)="edit(editedPrint)">
     <button class="btn btn-danger" (click)="editedPrint = null">Cancel</button>

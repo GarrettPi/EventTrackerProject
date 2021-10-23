@@ -32,4 +32,22 @@ export class PrintService {
       })
     );
   }
+
+  create(print: Print){
+    return this.http.post<Print>(this.url, print).pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError("PrintService.update(): error creating print")
+      })
+    );
+  }
+
+  delete(id: number){
+    return this.http.delete(this.url+'/'+id).pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError('PrintService.destroy(): error deleting print');
+      })
+    );
+  }
 }

@@ -9,18 +9,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skilldistillery.printtracker.entities.Material;
-import com.skilldistillery.printtracker.services.MaterialService;
+import com.skilldistillery.printtracker.entities.Source;
+import com.skilldistillery.printtracker.services.SourceService;
 
 @RestController
 @RequestMapping("api")
 @CrossOrigin({ "*", "http://localhost:4200"})
-public class MaterialController {
+public class SourceController {
 
 	@Autowired
-	MaterialService materialSvc;
+	SourceService sourceSvc;
 	
-	@GetMapping("materials")
-	public List<Material> materialIndex(){
-		return materialSvc.getAllMaterials();
+	@GetMapping("sources")
+	public List<Source> sourceIndex(){
+		return sourceSvc.getAllSources();
 	}
 }
